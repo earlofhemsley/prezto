@@ -12,6 +12,13 @@ fi
 
 # Customize to your needs...
 export PATH="$PATH:${HOME}/bin"
+export PATH="$PATH:${HOME}/.local/bin"
 export PATH="$PATH:/opt/nvim-linux64/bin"
 
 export XDG_RUNTIME_DIR=/tmp/runtime-dir
+
+# aliases
+alias rkp="rm -f ${HOME}/Documents/personal.kdbx && dbxcli get personal.kdbx ${HOME}/Documents/personal.kdbx"
+alias refresh="source ${HOME}/.zshrc"
+alias config="gvim ${HOME}/.zshrc"
+alias dn="dotnet"
