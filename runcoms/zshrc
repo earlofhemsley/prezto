@@ -11,3 +11,24 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+bindkey -v
+
+alias refresh="source ~/.zshrc"
+
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias ......="cd ../../../../.."
+
+alias config="vi ~/.zshrc"
+alias refresh="source ~/.zshrc"
+
+# flyctl home dir
+export FLYCTL_INSTALL="/home/landonhemsley/.fly"
+
+# this is because i had to change where npm global packages are located
+# because of EACCES (directory permissions) errors
+# https://stackoverflow.com/a/29787931
+export PATH=/home/landonhemsley/.npm-global/bin:$PATH
+export PATH=${FLYCTL_INSTALL}/bin:${PATH}
