@@ -24,6 +24,9 @@ alias refresh="source ${HOME}/.zshrc"
 alias config="gvim ${HOME}/.zshrc"
 alias dn="dotnet"
 
+# ssh keychain
+eval `keychain --agents ssh --eval id_ecdsa_axon_vr id_ecdsa_earlofhemsley`
+
 ######## ssh agent ########
 # source of this script snippet: 
 #     https://superuser.com/questions/1808572/how-to-automate-starting-the-ssh-agent-and-adding-my-keys-in-wsl2-for-windows
@@ -34,16 +37,17 @@ alias dn="dotnet"
 #     starts the ssh agent and exports the ssh-agent env into a file in my home dir, or, if it is running already, 
 #     that parses the state of the ssh-agent environment and applies it to my terminal environment
 ###################################################################################################################################
-ssh_pid=$(pidof ssh-agent)
-
-# If the agent is not running, start it, and save the environment to a file
-if [ "$ssh_pid" = "" ]; then
-        ssh_env="$(ssh-agent -s)"
-        echo "$ssh_env" | head -n 2 | tee ~/.ssh_agent_env > /dev/null
-fi
-
-# Load the environment from the file
-if [ -f ~/.ssh_agent_env ]; then
-        eval "$(cat ~/.ssh_agent_env)"
-fi
-###################################################################################################################################
+#ssh_pid=$(pidof ssh-agent)
+#
+## If the agent is not running, start it, and save the environment to a file
+#if [ "$ssh_pid" = "" ]; then
+#        ssh_env="$(ssh-agent -s)"
+#        rm -f ~/.ssh_agent_env
+#        echo "$ssh_env" | head -n 2 | tee ~/.ssh_agent_env > /dev/null
+#fi
+#
+## Load the environment from the file
+#if [ -f ~/.ssh_agent_env ]; then
+#        eval "$(cat ~/.ssh_agent_env)"
+#fi
+####################################################################################################################################
