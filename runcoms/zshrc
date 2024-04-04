@@ -23,3 +23,27 @@ alias kdbx-put="dbxcli put ${HOME}/Documents/personal.kdbx"
 alias refresh="source ${HOME}/.zshrc"
 alias config="gvim ${HOME}/.zshrc"
 alias dn="dotnet"
+
+######## ssh agent ########
+# source of this script snippet: 
+#     https://superuser.com/questions/1808572/how-to-automate-starting-the-ssh-agent-and-adding-my-keys-in-wsl2-for-windows
+# purpose of adding this snippet:
+#     I wanted to be able to intelligently work with ssh keys for github.com. Since I have multiple github.com accounts that I
+#     use with this machine. Turns out the only way to do this was through using the ssh agent. However, the ssh agent does not
+#     start up automatically with wsl. Because of this, the best way to deal with it was to have this little startup script that
+#     starts the ssh agent and exports the ssh-agent env into a file in my home dir, or, if it is running already, 
+#     that parses the state of the ssh-agent environment and applies it to my terminal environment
+###################################################################################################################################
+ssh_pid=$(pidof ssh-agent)
+
+# If the agent is not running, start it, and save the environment to a file
+if [ "$ssh_pid" = "" ]; then
+        ssh_env="$(ssh-agent -s)"
+        echo "$ssh_env" | head -n 2 | tee ~/.ssh_agent_env > /dev/null
+fi
+
+# Load the environment from the file
+if [ -f ~/.ssh_agent_env ]; then
+        eval "$(cat ~/.ssh_agent_env)"
+fi
+###################################################################################################################################
