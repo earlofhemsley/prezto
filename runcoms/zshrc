@@ -10,21 +10,52 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
+# Source Custom GHA functions
+if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/gha.zsh" ]]; then
+  source "${ZDOTDIR:-$HOME}/.zprezto/gha.zsh" 
+fi
+
 # Customize to your needs...
 export PATH="$PATH:${HOME}/bin"
 export PATH="$PATH:${HOME}/.local/bin"
 export PATH="$PATH:/opt/nvim-linux64/bin"
+export PATH="$PATH:/opt/mssql-tools18/bin"
+export PATH="$PATH:/snap/intellij-idea-ultimate/current/bin"
 
 export XDG_RUNTIME_DIR=/tmp/runtime-dir
 
 # aliases
-alias kdbx-get="rm -f ${HOME}/Documents/personal.kdbx && dbxcli get personal.kdbx ${HOME}/Documents/personal.kdbx"
-alias kdbx-put="dbxcli put ${HOME}/Documents/personal.kdbx"
+alias kdbx-get="rm -f ${HOME}/WinHome/Documents/personal.kdbx && dbxcli get personal.kdbx ${HOME}/WinHome/Documents/personal.kdbx"
+alias kdbx-put="dbxcli put ${HOME}/WinHome/Documents/personal.kdbx"
 alias refresh="source ${HOME}/.zshrc"
 alias config="gvim ${HOME}/.zshrc"
-alias dn="dotnet"
+alias dn="dotnet.exe"
+alias fn="func.exe"
+alias shutdown="wsl.exe --shutdown"
+alias dc="docker compose"
+alias idea="idea &> /dev/null &"
+alias ais="ais-cli"
+alias kcl="kubectl"
+alias tf="terraform"
+
+
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias ......="cd ../../../../.."
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# pnpm
+export PNPM_HOME="/home/lhemsley/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+# added by me on 2024 11 26 b/c unless the heap space is allocated to 4G, axon ui projects won't work correctly
+export NODE_OPTIONS="--max-old-space-size=4096" 
