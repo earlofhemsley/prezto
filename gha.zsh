@@ -23,6 +23,8 @@ few_deploy() {
   if [ $((RESULT)) -eq 0 ]; then
     gh workflow run ais-${ENV}-pipeline.yaml -r $(git branch --show-current) -F packages=vr-few
   fi
+  sleep 3
+  xdg-open $(gh run list --workflow=ais-${ENV}-pipeline.yaml --json url -q '.[0].url')
 }
 
 view_deploy() {
@@ -31,4 +33,15 @@ view_deploy() {
   if [ $((RESULT)) -eq 0 ]; then
     xdg-open $(gh run list --workflow=ais-${ENV}-pipeline.yaml --json url -q '.[0].url')
   fi
+}
+
+npr() {
+  if [[ $# -lt 1 || "$1" == "" ]]; then
+    echo "gimme a title. First arg is the title of the pr. everything else is pass-through appended"
+    return 1
+  fi
+
+  CMD="gh pr create -a lhemsley -t \"$1\" -r dloman,dwild ${@:2}"
+  echo $CMD
+  eval $CMD
 }
