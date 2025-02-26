@@ -36,12 +36,51 @@ view_deploy() {
 }
 
 npr() {
-  if [[ $# -lt 1 || "$1" == "" ]]; then
-    echo "gimme a title. First arg is the title of the pr. everything else is pass-through appended"
+  local title=""
+  local reviewers=()
+
+  # Parse options: -t requires an argument; -d and -w are flags.
+  while getopts ":t:dw" opt; do
+    case $opt in
+      t)
+        title="$OPTARG"
+        ;;
+      d)
+        reviewers+=("dloman")
+        ;;
+      w)
+        reviewers+=("dwild")
+        ;;
+      a)
+        reviewers+=("abirutis")
+        ;;
+      \?)
+        echo "Invalid option: -$OPTARG" >&2
+        return 1
+        ;;
+      :)
+        echo "Option -$OPTARG requires an argument." >&2
+        return 1
+        ;;
+    esac
+  done
+  shift $((OPTIND - 1))
+
+  # Ensure a title was provided.
+  if [[ -z "$title" ]]; then
+    echo "Error: No title provided. Use -t \"<title>\" to set the PR title."
     return 1
   fi
 
-  CMD="gh pr create -a lhemsley -t \"$1\" -r dloman,dwild ${@:2}"
-  echo $CMD
-  eval $CMD
+  # Build the reviewers argument if any reviewers were selected.
+  local reviewers_arg=""
+  if [ ${#reviewers[@]} -gt 0 ]; then
+    # Join reviewers with commas.
+    reviewers_arg="-r $(IFS=,; echo "${reviewers[*]}")"
+  fi
+
+  # Construct and execute the gh command.
+  local cmd="gh pr create -a lhemsley -t \"$title\" $reviewers_arg $@"
+  echo "$cmd"
+  eval "$cmd"
 }
