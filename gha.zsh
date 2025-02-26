@@ -38,9 +38,10 @@ view_deploy() {
 npr() {
   local title=""
   local reviewers=()
+  local modifier=1
 
   # Parse options: -t requires an argument; -d and -w are flags.
-  while getopts ":t:dw" opt; do
+  while getopts ":t:dwa" opt; do
     case $opt in
       t)
         title="$OPTARG"
@@ -55,8 +56,7 @@ npr() {
         reviewers+=("abirutis")
         ;;
       \?)
-        echo "Invalid option: -$OPTARG" >&2
-        return 1
+        modifier=2
         ;;
       :)
         echo "Option -$OPTARG requires an argument." >&2
@@ -64,7 +64,8 @@ npr() {
         ;;
     esac
   done
-  shift $((OPTIND - 1))
+
+  shift $((OPTIND - modifier))
 
   # Ensure a title was provided.
   if [[ -z "$title" ]]; then
