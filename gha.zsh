@@ -35,6 +35,8 @@ view_deploy() {
   fi
 }
 
+alias viewpr="gh pr view --web"
+
 npr() {
   local title=""
   local reviewers=()
@@ -85,3 +87,4 @@ npr() {
   echo "$cmd"
   eval "$cmd"
 }
+

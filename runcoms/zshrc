@@ -59,3 +59,4 @@ esac
 
 # added by me on 2024 11 26 b/c unless the heap space is allocated to 4G, axon ui projects won't work correctly
 export NODE_OPTIONS="--max-old-space-size=4096" 
+
