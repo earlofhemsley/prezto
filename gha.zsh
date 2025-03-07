@@ -35,7 +35,7 @@ view_deploy() {
   fi
 }
 
-alias viewpr="gh pr view --web"
+alias prview="gh pr view --web"
 
 npr() {
   local title=""
@@ -43,26 +43,25 @@ npr() {
   local modifier=1
 
   # Parse options: -t requires an argument; -d and -w are flags.
-  while getopts ":t:dwa" opt; do
+  while getopts ":t:lwb" opt; do
     case $opt in
       t)
         title="$OPTARG"
         ;;
-      d)
+      l)
         reviewers+=("dloman")
         ;;
       w)
         reviewers+=("dwild")
         ;;
-      a)
+      b)
         reviewers+=("abirutis")
         ;;
       \?)
         modifier=2
         ;;
       :)
-        echo "Option -$OPTARG requires an argument." >&2
-        return 1
+        # do nothing
         ;;
     esac
   done
