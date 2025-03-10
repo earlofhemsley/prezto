@@ -23,6 +23,7 @@ alias ......="cd ../../../../.."
 
 alias config="vi ~/.zshrc"
 alias refresh="source ~/.zshrc"
+alias tf="terraform"
 
 # flyctl home dir
 export FLYCTL_INSTALL="/home/landonhemsley/.fly"
@@ -32,3 +33,7 @@ export FLYCTL_INSTALL="/home/landonhemsley/.fly"
 # https://stackoverflow.com/a/29787931
 export PATH=/home/landonhemsley/.npm-global/bin:$PATH
 export PATH=${FLYCTL_INSTALL}/bin:${PATH}
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
