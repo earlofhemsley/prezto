@@ -35,7 +35,7 @@ view_deploy() {
   fi
 }
 
-alias prview="gh pr view --web"
+alias pr_view="gh pr view --web"
 
 npr() {
   local title=""
@@ -85,5 +85,7 @@ npr() {
   local cmd="gh pr create -a lhemsley -t \"$title\" $reviewers_arg $@"
   echo "$cmd"
   eval "$cmd"
+
+  gh pr view --web
 }
 
