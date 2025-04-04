@@ -43,7 +43,7 @@ npr() {
   local modifier=1
 
   # Parse options: -t requires an argument; -d and -w are flags.
-  while getopts ":t:lwb" opt; do
+  while getopts ":t:lwbr" opt; do
     case $opt in
       t)
         title="$OPTARG"
@@ -56,6 +56,9 @@ npr() {
         ;;
       b)
         reviewers+=("abirutis")
+        ;;
+      r)
+        reviewers+=("mrickman")
         ;;
       \?)
         modifier=2
