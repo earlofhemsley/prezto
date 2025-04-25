@@ -35,7 +35,7 @@ view_deploy() {
   fi
 }
 
-alias pr_view="gh pr view --web"
+alias prv="gh pr view --web"
 
 npr() {
   local title=""
