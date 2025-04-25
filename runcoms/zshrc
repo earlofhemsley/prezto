@@ -13,6 +13,8 @@ fi
 # Customize to your needs...
 bindkey -v
 
+source ~/.zprezto/gha.zsh
+
 alias refresh="source ~/.zshrc"
 
 alias ..="cd .."
