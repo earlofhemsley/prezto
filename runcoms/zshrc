@@ -37,6 +37,7 @@ alias idea="idea &> /dev/null &"
 alias ais="ais-cli"
 alias kcl="kubectl"
 alias tf="terraform"
+alias copy="xclip -sel clip"
 
 
 alias ..="cd .."
