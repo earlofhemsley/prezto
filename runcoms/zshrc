@@ -27,14 +27,25 @@ alias config="vi ~/.zshrc"
 alias refresh="source ~/.zshrc"
 alias tf="terraform"
 
+ww () {
+    watch -n 1 "aws ecs describe-services --cluster hound_cluster --service ${1} --query 'services[0].events[].message' --output table" 
+}
+
+use-java () {
+    local name=$1
+    local pkg=$(update-java-alternatives -l | grep "${name}" | awk '{print $1}')
+    sudo update-java-alternatives -s "${pkg}"
+    echo "now using ${pkg}"
+}
+
 # flyctl home dir
 export FLYCTL_INSTALL="/home/landonhemsley/.fly"
+export PATH=${FLYCTL_INSTALL}/bin:${PATH}
 
 # this is because i had to change where npm global packages are located
 # because of EACCES (directory permissions) errors
 # https://stackoverflow.com/a/29787931
 export PATH=/home/landonhemsley/.npm-global/bin:$PATH
-export PATH=${FLYCTL_INSTALL}/bin:${PATH}
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
