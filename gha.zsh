@@ -40,36 +40,38 @@ alias prv="gh pr view --web"
 npr() {
   local title=""
   local reviewers=()
-  local modifier=1
+  local args=()
 
-  # Parse options: -t requires an argument; -d and -w are flags.
-  while getopts ":t:lwbr" opt; do
-    case $opt in
-      t)
-        title="$OPTARG"
+  while [[ $# -gt 0 ]]; do
+    case $1 in
+      -t)
+        title=$2
+        shift 2
         ;;
-      l)
+      -a)
+        reviewers+=("vr/vrpod4")
+        shift
+        ;;
+      -l)
         reviewers+=("dloman")
+        shift
         ;;
-      w)
+      -w)
         reviewers+=("dwild")
+        shift
         ;;
-      b)
+      -b)
         reviewers+=("abirutis")
+        shift
         ;;
-      r)
-        reviewers+=("mrickman")
-        ;;
-      \?)
-        modifier=2
-        ;;
-      :)
-        # do nothing
+      *)
+        args+=("$1")
+        shift
         ;;
     esac
   done
 
-  shift $((OPTIND - modifier))
+
 
   # Ensure a title was provided.
   if [[ -z "$title" ]]; then
@@ -77,15 +79,13 @@ npr() {
     return 1
   fi
 
-  # Build the reviewers argument if any reviewers were selected.
   local reviewers_arg=""
-  if [ ${#reviewers[@]} -gt 0 ]; then
-    # Join reviewers with commas.
+  if [[ "${#reviewers[@]}" -gt 0 ]]; then
     reviewers_arg="-r $(IFS=,; echo "${reviewers[*]}")"
   fi
 
   # Construct and execute the gh command.
-  local cmd="gh pr create -a lhemsley -t \"$title\" $reviewers_arg $@"
+  local cmd="gh pr create -t \"${title}\" ${reviewers_arg} ${args[@]}"
   echo "$cmd"
   eval "$cmd"
 
