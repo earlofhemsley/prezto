@@ -49,6 +49,10 @@ npr() {
         shift 2
         ;;
       -a)
+        reviewers+=("dloman" "dwild" "abirutis")
+        shift
+        ;;
+      -v)
         reviewers+=("vr/vrpod4")
         shift
         ;;
@@ -88,6 +92,9 @@ npr() {
   local cmd="gh pr create -t \"${title}\" ${reviewers_arg} ${args[@]}"
   echo "$cmd"
   eval "$cmd"
+
+  echo $(gh pr view --json url -q .url) | copy
+  echo "url copied. now opening in browser"
 
   gh pr view --web
 }
