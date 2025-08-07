@@ -93,7 +93,7 @@ npr() {
   echo "$cmd"
   eval "$cmd"
 
-  echo $(gh pr view --json url -q .url) | copy
+  echo $(gh pr view --json url -q .url) | xclip -sel clip
   echo "url copied. now opening in browser"
 
   gh pr view --web
