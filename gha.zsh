@@ -12,16 +12,25 @@ validate_input() {
         fi
         ENV="$1"
     fi
+
+    if [ "${2}" != "" ]; then
+      if [[ "${2}" != "few" && "${2}" != "net-test" ]]; then
+        echo "invalid application. valid apps are few and net-test"
+        return 1
+      fi
+      APP="${2}"
+    fi
+
     return 0
 }
 
 
 
-few_deploy() {
-  validate_input $1
+ui_deploy() {
+  validate_input $1 $2
   RESULT=$?
   if [ $((RESULT)) -eq 0 ]; then
-    gh workflow run ais-${ENV}-pipeline.yaml -r $(git branch --show-current) -F packages=vr-few
+    gh workflow run ais-${ENV}-pipeline.yaml -r $(git branch --show-current) -F packages=vr-"${APP}"
   fi
   sleep 3
   xdg-open $(gh run list --workflow=ais-${ENV}-pipeline.yaml --json url -q '.[0].url')

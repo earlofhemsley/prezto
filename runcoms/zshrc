@@ -24,9 +24,24 @@ export PATH="$PATH:/snap/intellij-idea-ultimate/current/bin"
 
 export XDG_RUNTIME_DIR=/tmp/runtime-dir
 
+# functions
+kdbx() {
+    action=$1
+    case ${action} in 
+        get)
+            rm -f ${HOME}/WinHome/Documents/personal.kdbx 
+            dbxcli get personal.kdbx ${HOME}/WinHome/Documents/personal.kdbx
+            ;;
+        put)
+            dbxcli put ${HOME}/WinHome/Documents/personal.kdbx
+            ;;
+        *)
+            echo "get or put only plz"
+            ;;
+    esac
+}
+
 # aliases
-alias kdbx-get="rm -f ${HOME}/WinHome/Documents/personal.kdbx && dbxcli get personal.kdbx ${HOME}/WinHome/Documents/personal.kdbx"
-alias kdbx-put="dbxcli put ${HOME}/WinHome/Documents/personal.kdbx"
 alias refresh="source ${HOME}/.zshrc"
 alias config="gvim ${HOME}/.zshrc"
 alias dn="dotnet.exe"
