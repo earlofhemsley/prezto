@@ -33,14 +33,14 @@ ui_deploy() {
     gh workflow run ais-${ENV}-pipeline.yaml -r $(git branch --show-current) -F packages=vr-"${APP}"
   fi
   sleep 3
-  xdg-open $(gh run list --workflow=ais-${ENV}-pipeline.yaml -e workflow_dispatch -u lhemsley --json url -q '.[0].url')
+  xdg-open $(gh run list --workflow=ais-${ENV}-pipeline.yaml -e workflow_dispatch -u lhemsley --json status,url -q '[.[] | select(.status != "completed")] | .[0].url')
 }
 
 view_deploy() {
   validate_input $1
   RESULT=$?
   if [ $((RESULT)) -eq 0 ]; then
-    xdg-open $(gh run list --workflow=ais-${ENV}-pipeline.yaml -e workflow_dispatch -u lhemsley --json url -q '.[0].url')
+    xdg-open $(gh run list --workflow=ais-${ENV}-pipeline.yaml -e workflow_dispatch -u lhemsley --json status,url -q '[.[] | select(.status != "completed")] | .[0].url')
   fi
 }
 
