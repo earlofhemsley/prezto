@@ -12,7 +12,7 @@ fi
 
 # Source Custom GHA functions
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/gha.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/gha.zsh" 
+  source "${ZDOTDIR:-$HOME}/.zprezto/gha.zsh"
 fi
 
 # Customize to your needs...
@@ -27,13 +27,13 @@ export XDG_RUNTIME_DIR=/tmp/runtime-dir
 # functions
 kdbx() {
     action=$1
-    case ${action} in 
+    case ${action} in
         get)
-            rm -f ${HOME}/WinHome/Documents/personal.kdbx 
-            dbxcli get personal.kdbx ${HOME}/WinHome/Documents/personal.kdbx
+            rm -f ${HOME}/w/Documents/personal.kdbx
+            dbxcli get personal.kdbx ${HOME}/w/Documents/personal.kdbx
             ;;
         put)
-            dbxcli put ${HOME}/WinHome/Documents/personal.kdbx
+            dbxcli put ${HOME}/w/Documents/personal.kdbx
             ;;
         *)
             echo "get or put only plz"
@@ -44,8 +44,6 @@ kdbx() {
 # aliases
 alias refresh="source ${HOME}/.zshrc"
 alias config="gvim ${HOME}/.zshrc"
-alias dn="dotnet.exe"
-alias fn="func.exe"
 alias shutdown="wsl.exe --shutdown"
 alias dc="docker compose"
 alias idea="setsid idea &> /dev/null &"
@@ -74,7 +72,13 @@ esac
 # pnpm end
 
 # added by me on 2024 11 26 b/c unless the heap space is allocated to 4G, axon ui projects won't work correctly
-export NODE_OPTIONS="--max-old-space-size=4096" 
+export NODE_OPTIONS="--max-old-space-size=4096"
 
 # added to set a default editor
 export EDITOR=vi
+
+# env vars specifically for dbt / snowflake / corp data eng 
+export DBT_SNOWFLAKE_USER="lhemsley@axon.com"
+#export DBT_PROFILE_TARGET="nova_vr_cloud_infra_eng_local"
+export DBT_PROFILE_TARGET="nova_product_vr_eng_local"
+
