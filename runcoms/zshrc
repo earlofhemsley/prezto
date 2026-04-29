@@ -5,15 +5,16 @@
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
 
-# Source Prezto.
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
-fi
+#if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
+#  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+#fi
 
-# Source Custom GHA functions
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/gha.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/gha.zsh"
-fi
+# Source Prezto.
+for file in "init.zsh" "gha.zsh" "kube.zsh" "az.zsh"; do
+    if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/${file}" ]]; then
+      source "${ZDOTDIR:-$HOME}/.zprezto/${file}"
+    fi
+done
 
 # Customize to your needs...
 export PATH="$PATH:${HOME}/bin"
@@ -48,7 +49,6 @@ alias shutdown="wsl.exe --shutdown"
 alias dc="docker compose"
 alias idea="setsid idea &> /dev/null &"
 alias ais="ais-cli"
-alias kcl="kubectl"
 alias tf="terraform"
 alias copy="xclip -sel clip"
 
