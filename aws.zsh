@@ -1,6 +1,12 @@
 #!/usr/bin/env zsh
 
-htunnel() {
+# open a db tunnel
+tunnel() {
+  if [[ -z "${AWS_ACCESS_KEY_ID}" || -z "${AWS_SECRET_ACCESS_KEY}" || -z "${AWS_SESSION_TOKEN}" ]]; then
+    echo "must assume the aws role first. source assumeRole"
+    return 1
+  fi
+
   local lport=5434
 
   if [ $# -gt 0 ]; then
@@ -17,5 +23,7 @@ htunnel() {
   ssh -L "${lport}":crzr-rds-db.c9muwimqk2jq.us-east-1.rds.amazonaws.com:5432 ec2-user@"${ip}"
 }
 
-
-
+# watch service deployment events
+ww () {
+    watch -n 1 "aws ecs describe-services --cluster hound_cluster --service ${1} --query 'services[0].events[].message' --output table"
+}

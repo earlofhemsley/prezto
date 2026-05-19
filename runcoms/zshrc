@@ -30,10 +30,6 @@ alias tf="terraform"
 
 alias tos="${HOME}/bin/thinkorswim &> /dev/null &"
 
-ww () {
-    watch -n 1 "aws ecs describe-services --cluster hound_cluster --service ${1} --query 'services[0].events[].message' --output table"
-}
-
 use-java () {
     local name=$1
     local pkg=$(update-java-alternatives -l | grep "${name}" | awk '{print $1}')
