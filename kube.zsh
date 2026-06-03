@@ -1,10 +1,10 @@
 # aliases surrounding kubernetes that i find useful
 
 alias k="kubectl"
-alias scaleup="kubectl scale --replicas=1 --all=true deployments -n vrbe"
-alias scaledown="kubectl scale --replicas=0 --all=true deployments -n vrbe"
-alias watchapps="watch -n 1 \"kubectl get pods -n vrbe\""
-alias watchdeps="watch -n 1 \"kubectl get pods -n vrbe-deps\""
+alias scaleup="kubectl config use-context kind-vrbe-local && kubectl scale --replicas=1 --all=true deployments -n vrbe"
+alias scaledown="kubectl config use-context kind-vrbe-local && kubectl scale --replicas=0 --all=true deployments -n vrbe"
+alias watchapps="kubectl config use-context kind-vrbe-local && watch -n 1 \"kubectl get pods -n vrbe\""
+alias watchdeps="kubectl config use-context kind-vrbe-local && watch -n 1 \"kubectl get pods -n vrbe-deps\""
 
 vld() {
   local dir="/mnt/c/Users/lhemsley/git/ghes/vr/axonvr_azure"

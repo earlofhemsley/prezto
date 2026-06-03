@@ -108,3 +108,30 @@ npr() {
   gh pr view --web
 }
 
+approve() {
+  # take in a list of identifiers
+  # as the args to this function, validate they're all integers
+  # and then run gh pr review --approve for each of them
+  # in succession. if one of them fails, then the function exits early
+
+  if [ $# -lt 1 ]; then
+    echo "must include pr ids"
+    return 1
+  fi
+
+  local id
+
+  for id in "$@"; do
+    if ! [[ "$id" =~ '^[0-9]+$' ]]; then
+      echo "invalid pr id: $id"
+      return 1
+    fi
+  done
+
+  for id in "$@"; do
+    gh pr review "$id" --approve || return $?
+  done
+
+}
+
+
