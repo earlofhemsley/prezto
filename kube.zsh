@@ -7,7 +7,7 @@ alias watchapps="kubectl config use-context kind-vrbe-local && watch -n 1 \"kube
 alias watchdeps="kubectl config use-context kind-vrbe-local && watch -n 1 \"kubectl get pods -n vrbe-deps\""
 
 vld() {
-  local dir="/mnt/c/Users/lhemsley/git/ghes/vr/axonvr_azure"
+  local dir="/mnt/c/Users/lhemsley/git/ghec/axon-vr/axonvr_azure"
 
   local apps=(auth laud content training telemetry)
   if [ $# -ge 1 ]; then
