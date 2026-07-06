@@ -13,8 +13,8 @@ fi
 # Customize to your needs...
 bindkey -v
 
-source ~/.zprezto/gha.zsh
-source ~/.zprezto/aws.zsh
+source $HOME/.zprezto/gha.zsh
+source $HOME/.zprezto/aws.zsh
 
 alias refresh="source ~/.zshrc"
 
