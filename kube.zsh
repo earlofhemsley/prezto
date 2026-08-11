@@ -29,7 +29,7 @@ vld() {
     helm dependency build "${dir}/charts/${app}" 2>&1 > /dev/null
 
     echo "upgrading ${app} in the cluster"
-    helm upgrade --install "${app}" "${dir}/charts/${app}" -f "${dir}/charts/${app}/values-local.yaml" -n vrbe 2>&1 > /dev/null
+    helm upgrade --install --create-namespace --namespace vrbe "${app}" "${dir}/charts/${app}" -f "${dir}/charts/${app}/values-local.yaml" 2>&1 > /dev/null
 
     echo "rollout restart on ${app} executed"
     kubectl rollout restart "deployments/vrbe-${app}-deploy" -n vrbe 2>&1 > /dev/null
