@@ -7,15 +7,15 @@ validate_input() {
     ENV=ag1
     if [ "$1" != "" ]; then
         if [[ "$1" != "ag1" && "$1" != "staging" && "$1" != "prod" ]]; then
-            echo "invalid environments. valid environments are ag1, staging, and prod"
+            echo "invalid environment. valid environments are ag1, staging, and prod"
             return 1
         fi
         ENV="$1"
     fi
 
     if [ "${2}" != "" ]; then
-      if [[ "${2}" != "few" && "${2}" != "net-test" ]]; then
-        echo "invalid application. valid apps are few and net-test"
+      if [[ "${2}" != "few" && "${2}" != "net-test" && ${2} != "internal-admin-portal" ]]; then
+        echo "invalid application. valid apps are few, net-test, and internal-admin-portal"
         return 1
       fi
       APP="${2}"
@@ -31,9 +31,11 @@ ui_deploy() {
   RESULT=$?
   if [ $((RESULT)) -eq 0 ]; then
     gh workflow run ais-${ENV}-pipeline.yaml -r $(git branch --show-current) -F packages=vr-"${APP}"
+    sleep 3
+    xdg-open $(gh run list --workflow=ais-${ENV}-pipeline.yaml -e workflow_dispatch -u lhemsley --json status,url -q '[.[] | select(.status != "completed")] | .[0].url')
+  else
+    echo "sorry charlie. invalid usage. Usage: ui_deploy (ag1|staging|prod) (few|net-test|internal-admin-portal)"
   fi
-  sleep 3
-  xdg-open $(gh run list --workflow=ais-${ENV}-pipeline.yaml -e workflow_dispatch -u lhemsley --json status,url -q '[.[] | select(.status != "completed")] | .[0].url')
 }
 
 view_deploy() {
