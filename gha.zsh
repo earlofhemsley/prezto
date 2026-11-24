@@ -121,6 +121,17 @@ approve() {
     return 1
   fi
 
+  local merge=0
+  if ! [[ "$1" =~ '^[0-9]+$' ]]; then
+    if [[ "$1" =~ 'merge$' ]]; then
+      echo 'will set to automerge also'
+      merge=1
+    else
+      echo 'could not parse first argument'
+    fi
+    shift 1
+  fi
+
   local id
 
   for id in "$@"; do
@@ -132,6 +143,9 @@ approve() {
 
   for id in "$@"; do
     gh pr review "$id" --approve || return $?
+    if [ "$merge" -eq 1 ]; then
+      gh pr merge "$id" --auto --merge || return $?
+    fi
   done
 
 }
